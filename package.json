@@ -1,0 +1,37 @@
+{
+  "name": "student-portfolio-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full-stack personal portfolio and admin management platform",
+  "type": "module",
+  "workspaces": [
+    "shared",
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "npm run --workspace=server dev",
+    "dev:client": "npm run --workspace=client dev",
+    "build": "npm run --workspace=shared build && npm run --workspace=server build && npm run --workspace=client build",
+    "build:shared": "npm run --workspace=shared build",
+    "build:server": "npm run --workspace=server build",
+    "build:client": "npm run --workspace=client build",
+    "typecheck": "npm run --workspace=shared typecheck && npm run --workspace=server typecheck && npm run --workspace=client typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "admin:create": "npm run --workspace=server admin:create",
+    "test": "npm run --workspace=shared test && npm run --workspace=server test && npm run --workspace=client test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.20.0",
+    "globals": "^15.14.0",
+    "prettier": "^3.5.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0"
+  }
+}
