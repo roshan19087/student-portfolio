@@ -1,8 +1,6 @@
 import { CorsOptions } from 'cors';
 import { env } from './env.config.js';
 
-const allowedOrigins = [env.CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'];
-
 export const corsConfig: CorsOptions = {
   origin: (origin, callback) => {
     // Allow requests with no origin (like mobile apps, curl, or server-to-server)
@@ -10,7 +8,27 @@ export const corsConfig: CorsOptions = {
       return callback(null, true);
     }
 
-    if (env.NODE_ENV === 'development' || allowedOrigins.includes(origin)) {
+    const envOrigins = (process.env.CORS_ORIGIN || '')
+      .split(',')
+      .map((o) => o.trim())
+      .filter(Boolean);
+
+    const allowedOrigins = [
+      env.CLIENT_URL,
+      ...envOrigins,
+      'http://localhost:5173',
+      'http://127.0.0.1:5173',
+      'http://localhost:3000',
+    ];
+
+    // Allow any onrender.com subdomain, localhost, or explicit wildcard/matches
+    if (
+      env.NODE_ENV === 'development' ||
+      process.env.CORS_ORIGIN === '*' ||
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.onrender.com') ||
+      origin.includes('localhost')
+    ) {
       return callback(null, true);
     }
 

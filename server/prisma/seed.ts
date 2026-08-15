@@ -314,7 +314,27 @@ async function main() {
       },
     },
   });
-  console.log('✅ Public Site Settings seeded');
+  // 8. Initial Admin User Account
+  const adminEmail = process.env.INITIAL_ADMIN_EMAIL || 'admin@example.com';
+  const adminPassword = process.env.INITIAL_ADMIN_PASSWORD || 'AdminSecret123!';
+  const argon2Module = await import('argon2');
+  const passwordHash = await argon2Module.default.hash(adminPassword, {
+    type: argon2Module.default.argon2id,
+    memoryCost: 65536,
+    timeCost: 3,
+    parallelism: 4,
+  });
+
+  const adminUser = await prisma.user.upsert({
+    where: { email: adminEmail },
+    update: { passwordHash },
+    create: {
+      email: adminEmail,
+      passwordHash,
+      role: 'ADMIN',
+    },
+  });
+  console.log(`✅ Admin Account created: ${adminUser.email} (Password: ${adminPassword})`);
 
   console.log('✨ Seeding complete!');
 }

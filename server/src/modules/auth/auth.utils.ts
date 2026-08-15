@@ -87,10 +87,13 @@ export class AuthUtils {
    * Standard cookie options for the 15-minute access token
    */
   static getAccessTokenCookieOptions(): CookieOptions {
+    const isProd = env.NODE_ENV === 'production';
+    const sameSiteSetting =
+      (process.env.COOKIE_SAME_SITE as 'none' | 'lax' | 'strict') || (isProd ? 'none' : 'lax');
     return {
       httpOnly: true,
-      secure: env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: isProd,
+      sameSite: sameSiteSetting,
       path: '/',
       maxAge: 15 * 60 * 1000, // 15 minutes
     };
@@ -100,10 +103,13 @@ export class AuthUtils {
    * Standard cookie options for the long-lived refresh token
    */
   static getRefreshTokenCookieOptions(): CookieOptions {
+    const isProd = env.NODE_ENV === 'production';
+    const sameSiteSetting =
+      (process.env.COOKIE_SAME_SITE as 'none' | 'lax' | 'strict') || (isProd ? 'none' : 'lax');
     return {
       httpOnly: true,
-      secure: env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: isProd,
+      sameSite: sameSiteSetting,
       path: '/',
       maxAge: env.JWT_REFRESH_EXPIRATION_DAYS * 24 * 60 * 60 * 1000, // 7 days
     };
@@ -113,10 +119,13 @@ export class AuthUtils {
    * Options for safely clearing authentication cookies
    */
   static getClearCookieOptions(): CookieOptions {
+    const isProd = env.NODE_ENV === 'production';
+    const sameSiteSetting =
+      (process.env.COOKIE_SAME_SITE as 'none' | 'lax' | 'strict') || (isProd ? 'none' : 'lax');
     return {
       httpOnly: true,
-      secure: env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: isProd,
+      sameSite: sameSiteSetting,
       path: '/',
     };
   }
