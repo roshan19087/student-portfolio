@@ -18,9 +18,7 @@
     "test": "echo \"@portfolio/shared: no tests needed for foundation step\""
   },
   "dependencies": {
+    "typescript": "^5.7.3",
     "zod": "^3.24.2"
-  },
-  "devDependencies": {
-    "typescript": "^5.7.3"
   }
 }
