@@ -330,20 +330,36 @@ export const AdminProfilePage: React.FC = () => {
             )}
 
             <div className="border-t border-zinc-100 dark:border-zinc-800 pt-4 space-y-3 text-left">
-              <div className="flex items-center gap-2">
-                <FileText className="h-4 w-4 text-blue-500" />
+              <div className="space-y-1">
                 <span className="text-xs font-bold uppercase font-mono text-zinc-900 dark:text-zinc-100">
-                  Resume Link
+                  Avatar Image URL
                 </span>
+                <input
+                  type="text"
+                  name="avatarUrl"
+                  value={formData.avatarUrl || ''}
+                  onChange={handleChange}
+                  placeholder="/uploads/images/... or https://..."
+                  className="w-full px-3 py-1.5 rounded-lg text-xs bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
+                />
               </div>
-              <input
-                type="text"
-                name="resumePdfUrl"
-                value={formData.resumePdfUrl || ''}
-                onChange={handleChange}
-                placeholder="/assets/resume.pdf or URL"
-                className="w-full px-3 py-1.5 rounded-lg text-xs bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
-              />
+
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-blue-500" />
+                  <span className="text-xs font-bold uppercase font-mono text-zinc-900 dark:text-zinc-100">
+                    Resume Link
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  name="resumePdfUrl"
+                  value={formData.resumePdfUrl || ''}
+                  onChange={handleChange}
+                  placeholder="/assets/resume.pdf or URL"
+                  className="w-full px-3 py-1.5 rounded-lg text-xs bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-500"
+                />
+              </div>
             </div>
           </Card>
         </div>

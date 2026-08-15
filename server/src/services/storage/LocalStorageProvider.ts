@@ -73,7 +73,8 @@ export class LocalStorageProvider implements IStorageProvider {
 
     await fs.promises.writeFile(filePath, buffer);
 
-    const publicUrl = `${env.API_URL}/uploads/${storageKey}`;
+    const baseUrl = env.API_URL && !env.API_URL.includes('localhost') ? env.API_URL : '';
+    const publicUrl = `${baseUrl}/uploads/${storageKey}`;
 
     logger.debug({ storageKey, size, category }, 'File stored on local filesystem');
 
